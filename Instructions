@@ -1,0 +1,19 @@
+Cluster the sequences from a given FASTA file into a phylogenetic tree using either a UPGMA or Neighbor Joining algorithm.
+
+The first step to creating the trees is to provide a distance matrix using a modified version of your pairwise alignment algorithm from your Homework 3. You must change the alignment algorithm to maximize the score and use a scoring matrix provided in a separate file. We will continue to use a constant gap penalty that will be specified on the command line.  Still create a nicely formatted output for the DISTANCE matrix and send it to the console output.
+
+The second step is to implement an algorithm to use those values in the distance matrix to build a phylogenetic tree.  The final results will provide a text output that represents the tree in the Newick tree format.  The Newick tree format  supports representing both the grouping and the distance (branch length) between groups.  Once you have a good tree produced, create a visualization of the tree (use an online / web app).  Provide a snapshot of the visualization of your tree created from the two fasta test files.
+
+The FASTA file will be given on the command line using "-F" parameter.
+
+The clustered tree filename will be given on the command line using "-T" parameter. The output generated from your application will store the tree in Newick format in the filename given.
+
+The scoring file will be given via the '-S' parameter. Each line begins with a symbol followed by a score for each of the possible symbols in the alphabet.  Scores are listed in same order as the symbols appear in the file. The scoring matrix file will have the following format: 
+<symbol> <score> <score> ...
+<symbol> <score> <score> ... 
+
+The gap penalty will be given via the '-G' parameter.
+
+Examples of call:
+  python upgma.py –f dataset1.fasta –s scoring1.txt -g -1 –t dataset1.tree > results1.out
+  python upgma.py –f dataset2.fasta –s scoring2.txt -g -2 –t dataset2.tree > results2.out
