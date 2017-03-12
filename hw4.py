@@ -25,6 +25,7 @@ def findMinCell(table):
 
 
 
+
 def joinSequences(sequences, a, b):      #   Merge 2 sequences 
     # Swap if the indices are not ordered
     if b < a:
@@ -37,8 +38,39 @@ def joinSequences(sequences, a, b):      #   Merge 2 sequences
     del sequences[b]
 
 
-#Joins the entries of a table on the cell (a, b) by averaging their data entries
+#   Joins the entries of a table on the cell (a, b) by averaging their data entries
 def shrinkTable(table, a, b):
+    # Swap if the indices are not ordered
+    if b < a:
+        print("swap " + str(a) + " " + str(b))
+        a, b = b, a
+    
+    # For the lower index, reconstruct the entire row (a, i), where i < A 
+    row = []
+    for i in range(0, a):
+        row.append((table[a][i] + table[b][i])/2)
+    table[a] = row
+#     print(row)
+    
+
+    #Lower matrix: row index > column index    
+    # Reconstruct the entire column (i, A), where i > A
+    #   Note: Since the matrix is lower triangular, row b only contains values for indices < b
+    for i in range(a+1, b):
+        table[i][a] = (table[i][a]+table[b][i])/2
+        print("adjusted values 1: " + str(table[i][a]))
+        
+    #   Finish up the rest of the values from row i
+    for i in range(b+1, len(table)):
+        table[i][a] = (table[i][a]+table[i][b])/2
+        
+        
+        # Remove the (now redundant) second index column entry
+        del table[i][b]
+
+    # Remove the (now redundant) second index row
+    del table[b]
+
 
 
 
@@ -71,5 +103,6 @@ M = [
     [18, 1, 32, 17, 35],        #F
     [13, 13, 29, 14, 28, 12]    #G
     ]
+
 
 UPGMA(M, M_sequences)  #should output: '((((A,D),((B,F),G)),C),E)'
